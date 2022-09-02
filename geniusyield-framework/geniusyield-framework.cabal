@@ -1,0 +1,156 @@
+cabal-version: 2.4
+name:          geniusyield-framework
+version:       0.1.0.0
+author:        Lars Bruenjes
+maintainer:    lars.bruenjes@geniusyield.co
+build-type:    Simple
+copyright:     © 2021 Lars Bruenjes
+
+common common
+  default-language:   Haskell2010
+  default-extensions:
+    BangPatterns
+    DataKinds
+    DeriveAnyClass
+    DeriveGeneric
+    DeriveTraversable
+    DerivingStrategies
+    DerivingVia
+    EmptyCase
+    FlexibleContexts
+    FlexibleInstances
+    GADTs
+    GeneralizedNewtypeDeriving
+    ImportQualifiedPost
+    MultiParamTypeClasses
+    MultiWayIf
+    NamedFieldPuns
+    NumericUnderscores
+    OverloadedStrings
+    RankNTypes
+    RecordWildCards
+    RoleAnnotations
+    ScopedTypeVariables
+    StandaloneDeriving
+    StandaloneKindSignatures
+    TupleSections
+    TypeApplications
+    TypeFamilies
+    TypeOperators
+    UndecidableInstances
+    ViewPatterns
+
+  ghc-options:
+    -Wall -Wincomplete-uni-patterns -Wno-unticked-promoted-constructors
+
+  -- speed-ups GHCi considerably
+  ghc-options:        -fno-show-valid-hole-fits
+  ghc-options:        -Wunused-packages
+
+library
+  import:          common
+  hs-source-dirs:  src
+  exposed-modules:
+    GeniusYield.CardanoApi.Query
+    GeniusYield.Imports
+    GeniusYield.Providers
+    GeniusYield.Providers.Blockfrost
+    GeniusYield.Providers.Common
+    GeniusYield.Providers.CachedQueryUTxOs
+    GeniusYield.Providers.CardanoDbSync
+    GeniusYield.Providers.ChainIndex
+    GeniusYield.Providers.Katip
+    GeniusYield.Providers.LiteChainIndex
+    GeniusYield.Providers.Maestro
+    GeniusYield.Providers.Node
+    GeniusYield.Providers.SubmitApi
+    GeniusYield.Transaction
+    GeniusYield.TxBuilder
+    GeniusYield.TxBuilder.Class
+    GeniusYield.TxBuilder.Contract
+    GeniusYield.TxBuilder.EmulatorTraceQuery
+    GeniusYield.TxBuilder.Node
+    GeniusYield.TxBuilder.NodeQuery
+    GeniusYield.TxBuilder.Random
+    GeniusYield.Types
+    GeniusYield.Types.Ada
+    GeniusYield.Types.Address
+    GeniusYield.Types.Datum
+    GeniusYield.Types.Era
+    GeniusYield.Types.Key
+    GeniusYield.Types.Logging
+    GeniusYield.Types.NetworkId
+    GeniusYield.Types.Providers
+    GeniusYield.Types.PubKeyHash
+    GeniusYield.Types.Rational
+    GeniusYield.Types.Redeemer
+    GeniusYield.Types.Script
+    GeniusYield.Types.Slot
+    GeniusYield.Types.SlotConfig
+    GeniusYield.Types.Time
+    GeniusYield.Types.Tx
+    GeniusYield.Types.TxBody
+    GeniusYield.Types.TxIn
+    GeniusYield.Types.TxOut
+    GeniusYield.Types.TxOutRef
+    GeniusYield.Types.UTxO
+    GeniusYield.Types.Value
+  other-modules:
+    GeniusYield.Utils
+
+  build-depends:
+    , aeson
+    , async
+    , attoparsec
+    , base                         ^>=4.14.1.0
+    , base16-bytestring
+    , blockfrost-client            ^>=0.6.0.0
+    , bytestring
+    , bytestring-encoding
+    , cache
+    , cardano-api                  ^>=1.35
+    , cardano-ledger-byron
+    , cardano-slotting
+    , cassava
+    , cborg
+    , containers
+    , data-default
+    , data-default-class
+    , either
+    , freer-extras
+    , hashable
+    , http-api-data
+    , http-client
+    , http-client-tls
+    , http-media
+    , http-types
+    , indexed-traversable
+    , katip                        ^>=0.8.6.0
+    , lens
+    , MonadRandom
+    , mtl
+    , ouroboros-consensus
+    , ouroboros-consensus-cardano
+    , ouroboros-network
+    , plutus-chain-index-core
+    , plutus-contract
+    , plutus-ledger
+    , plutus-ledger-api
+    , plutus-ledger-constraints
+    , plutus-tx
+    , postgresql-simple
+    , resource-pool
+    , safe-money
+    , scientific
+    , serialise
+    , servant
+    , servant-client
+    , servant-client-core
+    , sop-core
+    , stm
+    , swagger2
+    , text
+    , time
+    , transformers
+    , vector
+    , witherable                   ^>=0.4.2

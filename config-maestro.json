@@ -1,0 +1,7 @@
+{
+    "coreProvider": {
+        "maestroUrl": "https://preprod.gomaestro-api.org/",
+        "maestroToken": 42
+    },
+    "networkId": "testnet-preprod"
+}

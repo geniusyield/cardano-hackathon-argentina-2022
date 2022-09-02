@@ -1,0 +1,7 @@
+dist-newstyle/
+cabal.project.local
+**/.DS_Store
+.envrc
+.vscode/
+logs/
+*.log

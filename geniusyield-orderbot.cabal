@@ -1,0 +1,139 @@
+cabal-version: 3.4
+name:          geniusyield-orderbot
+version:       0.1.0.0
+build-type:    Simple
+
+-- Common sections
+
+common common-ghc-opts
+  ghc-options:
+    -Wall -Wcompat -Wincomplete-uni-patterns -Wno-unused-do-bind
+    -Wno-partial-type-signatures -Wincomplete-record-updates
+    -Wmissing-deriving-strategies -Wno-name-shadowing -Wunused-foralls
+    -Wno-unticked-promoted-constructors -fprint-explicit-foralls
+    -fprint-explicit-kinds
+
+common common-deps
+  build-depends:
+    , aeson
+    , aeson-pretty
+    , base
+    , bytestring
+    , containers
+    , geniusyield-framework
+    , mtl
+    , serialise
+    , text
+
+common common-lang
+  default-language: Haskell2010
+  default-extensions:
+    ApplicativeDo
+    BangPatterns
+    BinaryLiterals
+    ConstrainedClassMethods
+    ConstraintKinds
+    DataKinds
+    DeriveAnyClass
+    DeriveDataTypeable
+    DeriveFoldable
+    DeriveFunctor
+    DeriveGeneric
+    DeriveLift
+    DeriveTraversable
+    DerivingStrategies
+    DerivingVia
+    DoAndIfThenElse
+    EmptyCase
+    EmptyDataDecls
+    EmptyDataDeriving
+    ExistentialQuantification
+    ExplicitForAll
+    FlexibleContexts
+    FlexibleInstances
+    GADTSyntax
+    GeneralisedNewtypeDeriving
+    HexFloatLiterals
+    ImplicitPrelude
+    InstanceSigs
+    KindSignatures
+    LambdaCase
+    MonomorphismRestriction
+    MultiParamTypeClasses
+    NoStarIsType
+    NamedFieldPuns
+    NumericUnderscores
+    OverloadedStrings
+    PatternGuards
+    PatternSynonyms
+    PolyKinds
+    PostfixOperators
+    RankNTypes
+    RelaxedPolyRec
+    RoleAnnotations
+    ScopedTypeVariables
+    StandaloneDeriving
+    StandaloneKindSignatures
+    TraditionalRecordSyntax
+    TupleSections
+    TypeApplications
+    TypeFamilyDependencies
+    TypeOperators
+    UnboxedTuples
+    ViewPatterns
+
+-- Build targets
+
+library            datasource-providers
+  import:          common-lang
+  import:          common-deps
+  import:          common-ghc-opts
+  hs-source-dirs:  impl/datasource-providers
+  build-depends:
+    , geniusyield-orderbot-framework:common
+    , geniusyield-dex-api
+  exposed-modules: GeniusYield.OrderBot.DataSource.Providers
+
+library            orderbook-list
+  import:          common-lang
+  import:          common-deps
+  import:          common-ghc-opts
+  hs-source-dirs:  impl/orderbook-list
+  build-depends:
+    , geniusyield-orderbot-framework:common
+    , geniusyield-orderbot-framework:datasource
+  exposed-modules:
+    GeniusYield.OrderBot.OrderBook.List
+
+-- Helper executable for creating a collateral for given signing key.
+
+executable         geniusyield-collateral-exe
+  import:          common-lang
+  import:          common-deps
+  import:          common-ghc-opts
+  main-is:         Collateral.hs
+  build-depends:   geniusyield-orderbot-framework:common
+  ghc-options:
+    -O2 -threaded -rtsopts -with-rtsopts=-N
+
+-- The primary orderbot executable - this must be instantiated with the signature implementations.
+
+executable         geniusyield-orderbot-exe
+  import:          common-lang
+  import:          common-deps
+  import:          common-ghc-opts
+  main-is:         Main.hs
+  build-depends:
+    , geniusyield-orderbot-framework
+    , geniusyield-orderbot-framework:common
+    , geniusyield-orderbot:datasource-providers
+    , geniusyield-orderbot:orderbook-list
+  mixins:
+    , geniusyield-orderbot:orderbook-list requires
+        (GeniusYield.OrderBot.DataSource as GeniusYield.OrderBot.DataSource.Providers)
+    , geniusyield-orderbot-framework requires
+        ( GeniusYield.OrderBot.DataSource as GeniusYield.OrderBot.DataSource.Providers
+        , GeniusYield.OrderBot.OrderBook as GeniusYield.OrderBot.OrderBook.List
+        )
+  ghc-options:
+    -O2 -threaded -rtsopts -with-rtsopts=-N

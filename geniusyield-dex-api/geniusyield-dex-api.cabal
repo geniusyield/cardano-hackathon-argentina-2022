@@ -1,0 +1,98 @@
+cabal-version: 3.4
+name:          geniusyield-dex-api
+version:       0.1.0.0
+build-type:    Simple
+
+-- Common sections
+
+common common-ghc-opts
+  ghc-options:
+    -Wall -Wcompat -Wincomplete-uni-patterns -Wno-unused-do-bind
+    -Wno-partial-type-signatures -Werror -Wincomplete-record-updates
+    -Wmissing-deriving-strategies -Wno-name-shadowing -Wunused-foralls
+    -Wno-unticked-promoted-constructors -fprint-explicit-foralls
+    -fprint-explicit-kinds
+
+common common-deps
+  build-depends:
+    ,   aeson
+    , base
+    , cardano-api
+    , containers
+    , geniusyield-framework
+    , mtl
+    , plutus-ledger-api
+    , plutus-tx
+    , postgresql-simple
+    , postgresql-simple-url
+    , text
+
+common common-lang
+  default-language: Haskell2010
+  default-extensions:
+    ApplicativeDo
+    BangPatterns
+    BinaryLiterals
+    ConstrainedClassMethods
+    ConstraintKinds
+    DataKinds
+    DeriveAnyClass
+    DeriveDataTypeable
+    DeriveFoldable
+    DeriveFunctor
+    DeriveGeneric
+    DeriveLift
+    DeriveTraversable
+    DerivingStrategies
+    DerivingVia
+    DoAndIfThenElse
+    EmptyCase
+    EmptyDataDecls
+    EmptyDataDeriving
+    ExistentialQuantification
+    ExplicitForAll
+    FlexibleContexts
+    FlexibleInstances
+    GADTSyntax
+    GeneralisedNewtypeDeriving
+    HexFloatLiterals
+    ImplicitPrelude
+    InstanceSigs
+    KindSignatures
+    LambdaCase
+    MonomorphismRestriction
+    MultiParamTypeClasses
+    NamedFieldPuns
+    MultiWayIf
+    NoStarIsType
+    NumericUnderscores
+    OverloadedStrings
+    PatternGuards
+    PatternSynonyms
+    PolyKinds
+    PostfixOperators
+    RankNTypes
+    RecordWildCards
+    RelaxedPolyRec
+    RoleAnnotations
+    ScopedTypeVariables
+    StandaloneDeriving
+    StandaloneKindSignatures
+    TraditionalRecordSyntax
+    TupleSections
+    TypeApplications
+    TypeFamilyDependencies
+    TypeOperators
+    ViewPatterns
+
+-- Build targets
+
+library
+  import:          common-lang
+  import:          common-deps
+  import:          common-ghc-opts
+  hs-source-dirs:  src
+  exposed-modules:
+    GeniusYield.DEX.Api.Liquidity
+    GeniusYield.DEX.Api.PartialOrder
+    GeniusYield.DEX.Api.Utils
