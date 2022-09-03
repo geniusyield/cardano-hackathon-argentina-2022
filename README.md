@@ -1,3 +1,7 @@
+# DEX architecture diagram
+
+![DEX architecture dagram](dex-diagram.png)
+
 # geniusyield-orderbot
 
 This is an order matching bot implementation that is meant to be modular and polymorphic. It uses backpack to support this goal.
