@@ -2,6 +2,11 @@
 
 ![DEX architecture dagram](dex-diagram.png)
 
+# Competition asset classes
+
+ - `fa2261efef35419afb055426b651b404356d803901a89c14cee9a926.TokenA`
+ - `fa2261efef35419afb055426b651b404356d803901a89c14cee9a926.TokenB`
+
 # geniusyield-orderbot
 
 This is an order matching bot implementation that is meant to be modular and polymorphic. It uses backpack to support this goal.
