@@ -87,10 +87,10 @@ monitorIO cfg = go
         clearScreen
         setCursorPosition 10 0
         setSGR [SetConsoleIntensity BoldIntensity]
-        printf "          Team Name                 Bot A      Bot B      Total\n\n"
+        printf "          Team Name                                    A          B      Total\n\n"
         setSGR [Reset]
         forM_ infos $ \TeamInfo {..} ->
-            printf "          %-20s %10d %10d %s%10d%s\n"
+            printf "          %-35s %10d %10d %s%10d%s\n"
                 tiName
                 tiBotA
                 tiBotB

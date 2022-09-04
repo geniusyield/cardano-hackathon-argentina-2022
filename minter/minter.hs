@@ -17,6 +17,7 @@ import qualified Plutus.V1.Ledger.Api                 as Plutus
 import qualified PlutusTx.Prelude                     as Plutus
 import qualified PlutusTx                             as Plutus
 import           System.Environment                   (getArgs)
+import           Text.Printf                          (printf)
 
 main :: IO ()
 main = getCfg >>= mintTokens >>= print
@@ -60,6 +61,9 @@ mintTokens Config {..} = do
     let pkh    = pubKeyHash $ paymentVerificationKey skey
         addr   = addressFromPubKeyHash cfgNetworkId pkh
         policy = tokenPolicy pkh
+
+    printf "%s\n" $ GYToken (mintingPolicyId policy) cfgTokenName
+
     (collateral, _) <- withCfgProviders (GYCoreConfig cfgInfo cfgNetworkId) $ \providers ->
         runGYTxQueryMonadNode cfgNetworkId providers $ getCollateral addr 5_000_000
     withCfgProviders (GYCoreConfig cfgInfo cfgNetworkId) $ \providers -> do
