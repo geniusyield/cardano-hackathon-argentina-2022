@@ -33,7 +33,6 @@ getCfg = do
 data Team = Team
     { teamName  :: !Text
     , teamAddrBot :: !GYAddressBech32
-    , teamAddrLP  :: !GYAddressBech32
     } deriving (Show, Generic, Aeson.FromJSON)
 
 data Config = Config
@@ -49,8 +48,6 @@ data TeamInfo = TeamInfo
     { tiName   :: !Text
     , tiBotA   :: !Natural
     , tiBotB   :: !Natural
-    , tiLPA    :: !Natural
-    , tiLPB    :: !Natural
     , tiTotalB :: !GYRational
     } deriving (Show, Read, Eq, Ord)
 
@@ -62,14 +59,11 @@ runQuery Config {..} m =
 teamInfoIO :: Config -> Team -> IO TeamInfo
 teamInfoIO cfg@Config {..} Team {..} = runQuery cfg $ do
     (botA, botB) <- f teamAddrBot
-    (lpA, lpB)   <- f teamAddrLP
-    let t = fromIntegral (botB + lpB) + cfgPrice * (fromIntegral $ botA + lpA)
+    let t = fromIntegral botB + cfgPrice * (fromIntegral botA)
     return TeamInfo
         { tiName   = teamName
         , tiBotA   = botA
         , tiBotB   = botB
-        , tiLPA    = lpA
-        , tiLPB    = lpB
         , tiTotalB = t
         }
   where
@@ -91,19 +85,15 @@ monitorIO cfg = go
         infos <- teamInfosIO cfg
 
         clearScreen
-        setCursorPosition 0 0
+        setCursorPosition 10 0
         setSGR [SetConsoleIntensity BoldIntensity]
-        printf "Team Name                 Bot A      Bot B       LP A       LP B    Total A    Total B      Total\n\n"
+        printf "          Team Name                 Bot A      Bot B      Total\n\n"
         setSGR [Reset]
         forM_ infos $ \TeamInfo {..} ->
-            printf "%-20s %10d %10d %10d %10d %10d %10d %s%10d%s\n"
+            printf "          %-20s %10d %10d %s%10d%s\n"
                 tiName
                 tiBotA
                 tiBotB
-                tiLPA
-                tiLPB
-                (tiBotA + tiLPA)
-                (tiBotB + tiLPB)
                 (setSGRCode [SetConsoleIntensity BoldIntensity])
                 (round tiTotalB :: Natural)
                 (setSGRCode [])
