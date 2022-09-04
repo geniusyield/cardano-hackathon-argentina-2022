@@ -4,10 +4,13 @@ packages: .
 packages: geniusyield-dex-api
 packages: geniusyield-framework
 packages: geniusyield-orderbot-framework
+packages: minter
 packages: monitoring-tool
 
 package geniusyield-orderbot
   tests: True
+package minter
+  haddock-options: "--optghc=-fplugin-opt PlutusTx.Plugin:defer-errors"
 
 package cardano-api
   ghc-options: -Werror
