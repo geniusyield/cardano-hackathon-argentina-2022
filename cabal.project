@@ -4,6 +4,7 @@ packages: .
 packages: geniusyield-dex-api
 packages: geniusyield-framework
 packages: geniusyield-orderbot-framework
+packages: monitoring-tool
 
 package geniusyield-orderbot
   tests: True
