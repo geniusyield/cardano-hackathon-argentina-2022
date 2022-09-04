@@ -1,17 +1,17 @@
 # Testing tokens
 
-Minting Policy: "789824bb4bcdc53d96c9114a9aec50149eb0ec7198d292c172556ec1"
-Token 1: "TokenA"
-Token 2: "TokenB"
-
-# DEX architecture diagram
-
-![DEX architecture dagram](dex-diagram.png)
+ - Minting Policy: `789824bb4bcdc53d96c9114a9aec50149eb0ec7198d292c172556ec1`
+ - Token 1: `TokenA`
+ - Token 2: `TokenB`
 
 # Competition asset classes
 
  - `fa2261efef35419afb055426b651b404356d803901a89c14cee9a926.TokenA`
  - `fa2261efef35419afb055426b651b404356d803901a89c14cee9a926.TokenB`
+
+# DEX architecture diagram
+
+![DEX architecture dagram](dex-diagram.png)
 
 # geniusyield-orderbot
 
