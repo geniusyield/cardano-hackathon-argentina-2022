@@ -1,0 +1,105 @@
+cabal-version:      3.4
+name:               geniusyield-simulator
+version:            0.1.0.0
+build-type:         Simple
+synopsis:           Program to simulate buy and sell orders between two tokens on the GY DEX.
+author:             Robertino Martinez
+maintainer:         robertino.martinez@iohk.io
+
+-- Common sections
+
+common common-ghc-opts
+  ghc-options:
+    -Wall -Wcompat -Wincomplete-uni-patterns -Wno-unused-do-bind
+    -Wno-partial-type-signatures -Werror -Wincomplete-record-updates
+    -Wmissing-deriving-strategies -Wno-name-shadowing -Wunused-foralls
+    -Wno-unticked-promoted-constructors -fprint-explicit-foralls
+    -fprint-explicit-kinds
+
+common common-deps
+  build-depends:
+    , aeson
+    , base
+    , bytestring
+    , containers
+    , filepath
+    , geniusyield-framework
+    , geniusyield-orderbot-framework:common
+    , mtl
+    , serialise
+    , text
+
+common common-lang
+  default-language: Haskell2010
+  default-extensions:
+    ApplicativeDo
+    BangPatterns
+    BinaryLiterals
+    ConstrainedClassMethods
+    ConstraintKinds
+    DataKinds
+    DeriveAnyClass
+    DeriveDataTypeable
+    DeriveFoldable
+    DeriveFunctor
+    DeriveGeneric
+    DeriveLift
+    DeriveTraversable
+    DerivingStrategies
+    DerivingVia
+    DoAndIfThenElse
+    EmptyCase
+    EmptyDataDecls
+    EmptyDataDeriving
+    ExistentialQuantification
+    ExplicitForAll
+    FlexibleContexts
+    FlexibleInstances
+    GADTSyntax
+    GeneralisedNewtypeDeriving
+    HexFloatLiterals
+    ImplicitPrelude
+    InstanceSigs
+    KindSignatures
+    LambdaCase
+    MonomorphismRestriction
+    MultiParamTypeClasses
+    NoStarIsType
+    NamedFieldPuns
+    NumericUnderscores
+    OverloadedStrings
+    PatternGuards
+    PatternSynonyms
+    PolyKinds
+    PostfixOperators
+    RankNTypes
+    RelaxedPolyRec
+    RoleAnnotations
+    ScopedTypeVariables
+    StandaloneDeriving
+    StandaloneKindSignatures
+    TraditionalRecordSyntax
+    TupleSections
+    TypeApplications
+    TypeFamilyDependencies
+    TypeOperators
+    UnboxedTuples
+    ViewPatterns
+
+-- Build targets
+
+executable geniusyield-simulator-exe
+    import:          common-lang
+    import:          common-deps
+    import:          common-ghc-opts
+    main-is:          Main.hs
+    other-modules:    GeniusYield.Simulator.Generator,
+    build-depends:
+        , random-fu ^>=0.2.7.7
+        , plutus-core
+        , geniusyield-dex-api
+        , plutus-ledger-api
+        , random
+    hs-source-dirs:   ., src
+    ghc-options:      -Wall
+    default-language: Haskell2010
